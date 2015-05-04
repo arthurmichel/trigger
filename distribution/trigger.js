@@ -3,7 +3,7 @@
  * A simple but powerful event system.
  *
  * license: MIT
- * version: 0.1.0
+ * version: 0.2.0
  * author: Nathaniel Blackburn
  * support: support@nblackburn.uk
  * website: http://github.com/nblackburn/trigger
@@ -19,13 +19,13 @@
 	};
 
 	// Define the plugin version.
-	Trigger.version = '0.1.0';
+	Trigger.version = '0.2.0';
 
 	// Extend the plugin with public functionality.
 	Trigger.prototype = {
 
 		// Any created events are stored in this array.
-		_triggers: [],
+		_triggers: {},
 
 		/**
 		 * Binds a new named trigger event.
@@ -35,13 +35,21 @@
 		*/
 		bind: function(name, callback)
 		{
+			// create a reference to the created triggers.
+			var triggers = this._triggers;
+
 			// Check the callback is a function.
 			if(typeof callback !== 'function') {
 				throw Error('callback must be of type function.');
 			}
 
+			// create the trigger if it doesn't exist.
+			if(!triggers.hasOwnProperty(name)) {
+				triggers[name] = [];
+			}
+
 			// Push the trigger.
-			this._triggers.push({name: name, callback: callback});
+			this._triggers[name].push(callback);
 		},
 
 		/**
@@ -54,18 +62,9 @@
 			// create a reference to the created triggers.
 			var triggers = this._triggers;
 
-			// Loop though the triggers.
-			for(var index = 0; index < triggers.length; index++)
-			{
-				// create a reference to the current trigger.
-				var trigger = this._triggers[index];
-
-				// Check the trigger name matches.
-				if(trigger.name === name) {
-
-					// remove the named event from the list of known triggers.
-					triggers.splice(index);
-				}
+			// check a trigger with the specified name exists.
+			if(triggers.hasOwnProperty(name)) {
+				delete triggers[name];
 			}
 		},
 
@@ -80,21 +79,19 @@
 			// create a reference to the created triggers.
 			var triggers = this._triggers;
 
-			// Loop though the triggers.
-			for(var index = 0; index < triggers.length; index++)
+			// check a trigger with the specified name exists.
+			if(triggers.hasOwnProperty(name))
 			{
-				// create a reference to the current trigger.
-				var trigger = triggers[index];
+				var callbacks = triggers[name];
 
-				// Check the trigger name matches.
-				if(trigger.name === name) {
-
+				// Loop though the triggers.
+				for(var index = 0; index < callbacks.length; index++)
+				{
 					// invoke the callback method along with the pass parameters.
-					trigger.callback.apply(this, [parameters]);
+					callbacks[index].apply(this, [parameters]);
 				}
 			}
 		}
-
 	};
 
 	// Expose the plugin to the window.
