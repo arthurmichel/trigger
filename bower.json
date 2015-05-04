@@ -1,0 +1,17 @@
+{
+  "name": "Trigger",
+  "version": "0.1.0",
+  "homepage": "https://github.com/nblackburn/trigger",
+  "authors": [
+    "Nathaniel Blackburn <support@nblackburn.uk>"
+  ],
+  "description": "A simple but powerful event system.",
+  "main": [
+  	"distribution/trigger.min.js"
+  ],
+  "keywords": [
+    "trigger",
+    "event"
+  ],
+  "license": "MIT"
+}
