@@ -79,3 +79,7 @@ events callback method.
         this.unbind('first.event'); 
     });
 ```
+
+## Donations
+
+[Donate](https://payy.me/@nblackburn)
