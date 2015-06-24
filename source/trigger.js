@@ -3,7 +3,7 @@
  * A simple but powerful event system.
  *
  * license: MIT
- * version: 0.2.0
+ * version: 0.3.0
  * author: Nathaniel Blackburn
  * support: support@nblackburn.uk
  * website: http://github.com/nblackburn/trigger
@@ -19,7 +19,7 @@
 	};
 
 	// Define the plugin version.
-	Trigger.version = '0.2.0';
+	Trigger.version = '0.3.0';
 
 	// Extend the plugin with public functionality.
 	Trigger.prototype = {
@@ -88,7 +88,7 @@
 				for(var index = 0; index < callbacks.length; index++)
 				{
 					// invoke the callback method along with the pass parameters.
-					callbacks[index].apply(this, [parameters]);
+					callbacks[index].apply(this, [this, parameters]);
 				}
 			}
 		}
